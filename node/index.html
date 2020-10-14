@@ -26,7 +26,15 @@
 var socket = io();
 
 socket.on('server message', function(data){
-    $('#chatLog').append('<li> '+ data.message + ' </li>');
+    $('#chatLog').append('<li> '+ data.username +' : ' + data.message + ' </li>');
+ });
+
+socket.on('join', function(data){
+    $('#chatLog').append('<li> ' + data.username + '님이 방을 들어왔습니다 </li>');
+});
+
+socket.on('leave', function(data){
+    $('#chatLog').append('<li> ' + data.username + '님이 방을 나갔습니다 </li>');
 });
 
 $(document).ready(function(){
