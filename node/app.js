@@ -1,4 +1,5 @@
 const express = require('express');
+const redis = require('socket.io-redis');
 
 const app = express();
 const port = 3000;
@@ -14,6 +15,7 @@ const server = app.listen( port, () => {
 
 const listen = require('socket.io');
 const io = listen(server);
+io.adapter(redis({ host: 'redis', port: 6379 }));
 
 const color = [
     "yellow",
