@@ -8,6 +8,19 @@ app.get('/', ( _ ,res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.listen( port, () => {
+const server = app.listen( port, () => {
     console.log('Express listening on port', port);
+});
+
+const listen = require('socket.io');
+const io = listen(server);
+
+io.on('connection', (socket) => { 
+
+    socket.on('client message', (data) => {
+        io.emit('server message', {
+            message : data.message
+        });
+    });
+
 });

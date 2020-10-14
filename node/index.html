@@ -19,5 +19,24 @@
 <form action="" id="sendForm">
     <input name="message" autocomplete="off" /><button>전송</button>
 </form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>  
+<script>
+var socket = io();
+
+socket.on('server message', function(data){
+    $('#chatLog').append('<li> '+ data.message + ' </li>');
+});
+
+$(document).ready(function(){
+    $('#sendForm').submit(function(){
+        var message = $('#sendForm input[name=message]');
+        socket.emit('client message', { message : message.val()});
+        message.val('');
+        return false;
+    });
+});
+</script>
 </body>
 </html>
